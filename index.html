@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DFG Graduiertenschulen</title>
+	<meta charset="utf-8">
+	<meta name="generator" content="leafletR">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<style type="text/css">
+		body {
+			padding: 0;
+			margin: 0;
+		}
+		html, body, #map {
+			height: 100%;
+		}
+		table, td {
+			border-collapse: collapse;
+			border-style: solid;
+			border-width: 1px;
+			border-color: #e9e9e9;
+			padding: 5px;
+		}
+		.evenrowcol{
+			background-color: #f6f6f6;
+		}
+	</style>
+</head>
+<body>
+	<div id="map"></div>
+	<script type="text/javascript">
+		var map = L.map('map');
+		
+		// scale bar
+		L.control.scale().addTo(map);
+
+		// base layer
+		var baseMaps = {};
+		var baseMap = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {"attribution":"Tiles &copy; <a href=\"http://cartodb.com/attributions\", target=\"_blank\">CartoDB</a>, Map data &copy; <a href=\"http://openstreetmap.org/copyright\", target=\"_blan\">OpenStreetMap contributors</a>"});
+		baseMap.addTo(map);
+		baseMaps["CartoDB Positron"] = baseMap;
+
+		// popup
+		function onEachFeature(feature, layer) {
+			if (feature.properties &&  feature.properties["Nummer"] && feature.properties["Projekttitel"] && feature.properties["Ort"] && feature.properties["Adresse"] && feature.properties["Beginn"]) {
+				layer.bindPopup(
+					"<table>" +
+					"<tr class='oddrowcol'><td>Nummer: </td><td>"+feature.properties["Nummer"]+"</td></tr>" +
+					"<tr class='evenrowcol'><td>Projekttitel: </td><td>"+feature.properties["Projekttitel"]+"</td></tr>" +
+					"<tr class='oddrowcol'><td>Ort: </td><td>"+feature.properties["Ort"]+"</td></tr>" +
+					"<tr class='evenrowcol'><td>Adresse: </td><td>"+feature.properties["Adresse"]+"</td></tr>" +
+					"<tr class='oddrowcol'><td>Beginn: </td><td>"+feature.properties["Beginn"]+"</td></tr>" +
+					"</table>"
+				);
+			}
+		}
+
+		// data layers
+		var layers = {};
+		var group = new L.featureGroup;
+		function addDataToMap(data, style, layer, lc) {
+			layers[layer] = L.geoJson(data, {
+				onEachFeature: (typeof onEachFeature == "undefined") ? undefined : onEachFeature,
+				pointToLayer: function (feature, latlng) {return L.marker(latlng);},
+				style: style
+			});
+			layers[layer].addTo(map);	
+			group.addLayer(layers[layer])
+			map.fitBounds(group.getBounds());
+		};
+		
+			if(typeof style1 == "undefined") style1 = undefined;
+    addDataToMap({
+		  "type": "FeatureCollection",
+		  "features": [
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "4",
+		        "Projekttitel": "Spemann Graduiertenschule für Biologie und Medizin (SGBM)",
+		        "Ort": "Freiburg",
+		        "Adresse": "Albertstraße 19A, 79104 Freiburg",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [7.8499615,48.0015875]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "10",
+		        "Projekttitel": "Internationales Graduiertenzentrum Kulturwissenschaften",
+		        "Ort": "Gießen",
+		        "Adresse": "Otto-Behaghel-Straße 10 B, 35394 Gießen",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.692471,50.576717]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "14",
+		        "Projekttitel": "Berlin Mathematical School",
+		        "Ort": "Berlin",
+		        "Adresse": "Unter den Linden 6, 10099 Berlin",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.39282,52.51806]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "21",
+		        "Projekttitel": "Karlsruher Graduiertenschule für Optik und Photonik",
+		        "Ort": "Karlsruhe",
+		        "Adresse": "Engesserstraße 13, 76131 Karlsruhe",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.4104896,49.0119937]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "26",
+		        "Projekttitel": "Graduiertenschule in Wirtschafts- und Sozialwissenschaften: Empirische und quantitative Methoden",
+		        "Ort": "Mannheim",
+		        "Adresse": "Schloss, 68131 Mannheim",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.4622333,49.4837106]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "55",
+		        "Projekttitel": "Graduate School of North American Studies",
+		        "Ort": "Berlin",
+		        "Adresse": "Lansstraße 7-9, 14195 Berlin",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.2923745,52.4573583]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "80",
+		        "Projekttitel": "Erlangen Graduiertenschule für Fortschrittliche Optische Technologien",
+		        "Ort": "Erlangen",
+		        "Adresse": "Konrad-Zuse-Straße 3-5, 91052 Erlangen",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [11.0272083,49.5941332]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "81",
+		        "Projekttitel": "International Graduate School of Science and Engineering (IGSSE)",
+		        "Ort": "München",
+		        "Adresse": "Arcisstraße 21, 80333 München",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [11.5685226,48.148696]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "82",
+		        "Projekttitel": "Graduiertenschule für Systemische Neurowissenschaften",
+		        "Ort": "Planegg; München",
+		        "Adresse": "Großhaderner Straße 2, 82152 Planegg ",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [11.45844,48.109151]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "86",
+		        "Projekttitel": "Berlin School of Mind and Brain",
+		        "Ort": "Berlin; Leipzig",
+		        "Adresse": "Stephanstraße 1A, 04103 Leipzig ",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [12.3882546,51.3340867]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "97",
+		        "Projekttitel": "Internationale Graduiertenschule für Biomedizin und Bioengineering Dresden",
+		        "Ort": "Dresden",
+		        "Adresse": "Mommsenstraße 11, 01069 Dresden",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.72781,51.02683]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "98",
+		        "Projekttitel": "Ruhr University Research School Plus",
+		        "Ort": "Bochum",
+		        "Adresse": "Universitätsstraße 150, 44801 Bochum",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [7.2650397,51.4471272]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "106",
+		        "Projekttitel": "Graduiertenschule der Lebenswissenschaften",
+		        "Ort": "Würzburg",
+		        "Adresse": "Josef-Schneider-Straße 2, 97080 Würzburg ",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [9.95373,49.8007]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "111",
+		        "Projekttitel": "Aachener Graduiertenschule für computergestützte Natur- und Ingenieurwissenschaften",
+		        "Ort": "Aachen",
+		        "Adresse": "Schinkelstraße 2, 52062 Aachen ",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [6.07647,50.77803]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "129",
+		        "Projekttitel": "Heidelberg Graduiertenschule für fundamentale Physik",
+		        "Ort": "Heidelberg",
+		        "Adresse": "Im Neuenheimer Feld 227, 69120 Heidelberg ",
+		        "Beginn": "2006"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.6717963,49.416292]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "144",
+		        "Projekttitel": "Bayreuther Internationale Graduiertenschule für Afrikastudien",
+		        "Ort": "Bayreuth",
+		        "Adresse": "Universität Bayreuth, 95440 Bayreuth",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [11.5851286,49.9261849]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "153",
+		        "Projekttitel": "Berlin Graduate School Muslim Cultures and Societies",
+		        "Ort": "Berlin",
+		        "Adresse": "Altensteinstraße 40, 14195 Berlin ",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.29631,52.45115]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "203",
+		        "Projekttitel": "Berlin-Brandenburg School for Regenerative Therapies",
+		        "Ort": "Berlin",
+		        "Adresse": "Augustenburgerplatz 1, 13353 Berlin ",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.3486434,52.5424137]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "208",
+		        "Projekttitel": "Integrierte Studien zur menschlichen Entwicklung in Landschaften",
+		        "Ort": "Kiel",
+		        "Adresse": "Johanna-Mestorf-Straße 2-6, 24118 Kiel",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [10.1230838,54.3395095]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "209",
+		        "Projekttitel": "Saarbrücker Graduiertenschule für Informatik",
+		        "Ort": "Saarbrücken",
+		        "Adresse": "Universität des Saarlandes, 66041 Saarbrücken",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [7.0377088,49.2537589]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "214",
+		        "Projekttitel": "Graduiertenschule für Mikrobielle Kommunikation - Jena",
+		        "Ort": "Jena",
+		        "Adresse": "Beutenbergstraße 11 a, 07745 Jena",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [11.572777,50.9091421]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "218",
+		        "Projekttitel": "Konstanzer Graduiertenschule Chemische Biologie",
+		        "Ort": "Konstanz",
+		        "Adresse": "Universitätsstraße 10, 78464 Konstanz ",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [9.18819,47.68947]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "220",
+		        "Projekttitel": "Heidelberger Graduiertenschule der mathematischen und computergestützten Methoden für die Wissenschaften",
+		        "Ort": "Heidelberg",
+		        "Adresse": "Im Neuenheimer Feld 368, 69120 Heidelberg",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.6683416,49.4177368]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "226",
+		        "Projekttitel": "Göttinger Graduiertenschule für Neurowissenschaften, Biophysik und Molekulare Biowissenschaften",
+		        "Ort": "Göttingen",
+		        "Adresse": "Am Faßberg 11, 37077 Göttingen ",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [9.9709162,51.5621433]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "233",
+		        "Projekttitel": "Computational Engineering",
+		        "Ort": "Darmstadt",
+		        "Adresse": "Dolivostraße 15, 64293 Darmstadt",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.64023,49.87759]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "249",
+		        "Projekttitel": "Die Hartmut Hoffmann-Berling Internationale Graduiertenschule für Molekular- und Zellbiologie Heidelberg",
+		        "Ort": "Heidelberg",
+		        "Adresse": "Im Neuenheimer Feld 282, 69120 Heidelberg ",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.6720948,49.4152201]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "256",
+		        "Projekttitel": "Friedrich Schlegel Graduate School of Literary Studies",
+		        "Ort": "Berlin",
+		        "Adresse": "Hittorfstraße 18, 14195 Berlin ",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.284843,52.4499262]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "260",
+		        "Projekttitel": "Graduiertenschule Bonn-Köln in Physik und Astronomie",
+		        "Ort": "Köln; Bonn",
+		        "Adresse": "Zülpicher Straße 77, 50937 Köln ",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [6.9326735,50.9260484]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "262",
+		        "Projekttitel": "Graduiertenschule für advanced Manufacturing Engineering (GSaME)",
+		        "Ort": "Stuttgart",
+		        "Adresse": "Universitätsstraße 38, 70569 Stuttgart",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [9.1064215,48.7451328]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "263",
+		        "Projekttitel": "Bremen International Graduate School of Social Sciences (BIGSSS)",
+		        "Ort": "Bremen",
+		        "Adresse": "Mary-Somerville-Straße 7, 28359 Bremen",
+		        "Beginn": "2008"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.86271,53.10638]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "266",
+		        "Projekttitel": "MAterialwissenschaften IN MainZ",
+		        "Ort": "Mainz; Kaiserslautern",
+		        "Adresse": "Staudingerweg 7, 55128 Mainz",
+		        "Beginn": "2008"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.235,49.99056]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "268",
+		        "Projekttitel": "Bielefeld Graduate School in History and Sociology (BGHS)",
+		        "Ort": "Bielefeld",
+		        "Adresse": "Universität Bielefeld, 33501 Bielefeld",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.5074004,52.0355138]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "270",
+		        "Projekttitel": "Internationale Graduiertenschule für Molekulare Medizin Ulm (IGradU)",
+		        "Ort": "Ulm",
+		        "Adresse": "Albert-Einstein-Allee 11, 89081 Ulm",
+		        "Beginn": "2007"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [9.9560487,48.4236474]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1006",
+		        "Projekttitel": "Graduiertenschule für Quantitative Biowissenschaften München (QBM)",
+		        "Ort": "München",
+		        "Adresse": "Feodor-Lynen-Straße 25, 81377 München",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [11.4647295,48.1130348]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1013",
+		        "Projekttitel": "Graduiertenschule für Analytical Sciences Adlershof",
+		        "Ort": "Berlin",
+		        "Adresse": "Brook-Taylor-Straße 2, 12489 Berlin",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.5286438,52.4317931]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1019",
+		        "Projekttitel": "Graduiertenschule für Entscheidungswissenschaften",
+		        "Ort": "Konstanz",
+		        "Adresse": "Universität Konstanz, 78457 Konstanz",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [9.187038,47.6887912]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1024",
+		        "Projekttitel": "Bamberger Graduiertenschule für Sozialwissenschaften",
+		        "Ort": "Bamberg",
+		        "Adresse": "Feldkirchenstraße 21, 96052 Bamberg",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [10.90466,49.90763]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1028",
+		        "Projekttitel": "Lernen, Leistung und lebenslange Entwicklung: Ein integriertes Forschungs- und Ausbildungsprogramm",
+		        "Ort": "Tübingen",
+		        "Adresse": "Europastraße 6, 72072 Tübingen",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [9.0561,48.51723]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1037",
+		        "Projekttitel": "Graduiertenschule für Ostasienstudien",
+		        "Ort": "Berlin",
+		        "Adresse": "Hittorfstraße 18, 14195 Berlin",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.284843,52.4499262]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1039",
+		        "Projekttitel": "Ferne Welten: Altertumswissenschaftliches Kolleg München",
+		        "Ort": "München",
+		        "Adresse": "Geschwister-Scholl-Platz 1, 80539 München",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [11.58036,48.15069]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1046",
+		        "Projekttitel": "Graduiertenschule für Ost- und Südosteuropastudien",
+		        "Ort": "München; Regensburg",
+		        "Adresse": "Maria-Theresia-Straße 21, 81675 München",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [11.5986936,48.1430287]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1070",
+		        "Projekttitel": "Darmstädter Graduiertenschule für Energiewissenschaft und Energietechnik",
+		        "Ort": "Darmstadt",
+		        "Adresse": "Jovanka-Bonschits-Straße 2, 64287 Darmstadt",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.6819639,49.8620428]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1085",
+		        "Projekttitel": "Karlsruher Graduiertenschule für Elementarteilchen- und Astroteilchenphysik: Wissenschaft und Technologie",
+		        "Ort": "Karlsruhe",
+		        "Adresse": "Wolfgang-Gaede Strasse 1, 76131 Karlsruhe",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [8.4119675,49.0125617]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1091",
+		        "Projekttitel": "Berliner Graduiertenschule für Integrative Onkologie",
+		        "Ort": "Berlin",
+		        "Adresse": "Augustenburger Platz 1, 13353 Berlin ",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [13.3486434,52.5424137]
+		      }
+		    },
+		    {
+		      "type": "Feature",
+		      "properties": {
+		        "Nummer": "1094",
+		        "Projekttitel": "a.r.t.e.s. Graduate School for the Humanities Cologne (AGSHC) ",
+		        "Ort": "Köln",
+		        "Adresse": "Universitätsstraße 22, 50937 Köln",
+		        "Beginn": "2012"
+		      },
+		      "geometry": {
+		        "type": "Point",
+		        "coordinates": [6.9297619,50.9263643]
+		      }
+		    }
+		  ]
+		}, style1, "DFG-Graduiertenschulen", "add");
+	</script>
+</body>
+</html>
